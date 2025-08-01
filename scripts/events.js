@@ -17,25 +17,28 @@ document.getElementById("loginButton").addEventListener("click", () => {
     firebase.auth().signOut();
   });
   
-  // === AUTH STATE LISTENER ===
-  firebase.auth().onAuthStateChanged(user => {
-    const authContainer = document.getElementById("authContainer");
-    const logoutContainer = document.getElementById("logoutContainer");
+// === AUTH STATE LISTENER ===
+firebase.auth().onAuthStateChanged(user => {
+    const authControls = document.getElementById("authControls");
+    const logoutControls = document.getElementById("logoutControls");
     const taskSection = document.querySelector(".page-container");
   
-    if (user) {
-      authContainer.style.display = "none";
-      logoutContainer.style.display = "block";
-      taskSection.style.display = "block";
-      document.getElementById("userEmailDisplay").textContent = `Logged in as ${user.email}`;
-      loadTasks(user.uid); // load user's tasks from Firestore
-    } else {
-      authContainer.style.display = "block";
-      logoutContainer.style.display = "none";
-      taskSection.style.display = "block"; // optional: allow usage without login
-      loadTasks(); // load from localStorage
+    if (authControls && logoutControls) {
+      if (user) {
+        authControls.style.display = "none";
+        logoutControls.style.display = "flex";
+        taskSection.style.display = "block";
+        document.getElementById("userEmailDisplay").textContent = `Logged in as ${user.email}`;
+        loadTasks(user.uid); // load user's tasks from Firestore
+      } else {
+        authControls.style.display = "flex";
+        logoutControls.style.display = "none";
+        taskSection.style.display = "block"; // optional: allow usage without login
+        loadTasks(); // load from localStorage
+      }
     }
   });
+  
   
 
 //Event Listeners
