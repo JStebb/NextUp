@@ -40,14 +40,19 @@
 
 /* Main Page Container (Flex for sidebars and content) */
 .page-container {
-    display: flex;
+    display: flex !important;
+    flex-direction: row !important;
     flex: 1;
     padding: 20px;
     gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
     width: 100%;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: space-between;
 }
+
 
 /* Header Styling */
 header {

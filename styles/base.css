@@ -21,7 +21,7 @@ body {
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
     .page-container {
-        flex-direction: column;
+        flex-direction: column !important;
         padding: 15px;
         gap: 15px;
     }
@@ -36,7 +36,7 @@ body {
         padding: 15px;
     }
 
-    .sidebar:last-of-type { /* Remove bottom border for the last sidebar (right sidebar) */
+    .sidebar:last-of-type {
         border-bottom: none;
     }
 
