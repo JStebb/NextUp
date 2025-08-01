@@ -11,23 +11,23 @@
     <link rel="stylesheet" href="styles/filters.css">
 </head>
 <body>
+    <div id="authContainer">
+        <h2>Login or Create Account</h2>
+        <input type="email" id="emailInput" placeholder="Email"><br>
+        <input type="password" id="passwordInput" placeholder="Password"><br>
+        <button id="loginButton">Login</button>
+        <button id="signupButton">Sign Up</button>
+    </div>
+      
+      <!-- Optional logout button -->
+    <div id="logoutContainer" style="display: none;">
+        <p id="userEmailDisplay"></p>
+        <button id="logoutButton">Log Out</button>
+    </div>
+
     <header>
-        <div id="authContainer">
-          <h2>Login or Create Account</h2>
-          <input type="email" id="emailInput" placeholder="Email"><br>
-          <input type="password" id="passwordInput" placeholder="Password"><br>
-          <button id="loginButton">Login</button>
-          <button id="signupButton">Sign Up</button>
-        </div>
-        
-        <div id="logoutContainer" style="display: none;">
-          <p id="userEmailDisplay"></p>
-          <button id="logoutButton">Log Out</button>
-        </div>
-      
         <h1>NextUp</h1>
-      </header>
-      
+    </header>
 
     <div class="page-container">
         <nav class="sidebar sidebar-left">
