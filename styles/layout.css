@@ -144,10 +144,6 @@ footer {
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
 
-    body { /*testing*/
-        background-color: red !important;
-      }/**/
-
     .page-container {
       flex-direction: column;
       padding: 15px;
