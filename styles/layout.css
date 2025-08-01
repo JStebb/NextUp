@@ -165,7 +165,7 @@ footer {
 
     .page-container {
       flex-direction: column;
-      /*padding: 15px;*/
+      padding: 0px;
       gap: 15px;
     }
 
