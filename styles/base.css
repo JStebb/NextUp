@@ -21,7 +21,7 @@ body {
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
     .page-container {
-        flex-direction: column !important;
+        flex-direction: column;
         padding: 15px;
         gap: 15px;
     }

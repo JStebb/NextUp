@@ -40,8 +40,8 @@
 
 /* Main Page Container (Flex for sidebars and content) */
 .page-container {
-    display: flex !important;
-    flex-direction: row !important;
+    display: flex;
+    flex-direction: row;
     flex: 1;
     padding: 20px;
     gap: 20px;
