@@ -144,6 +144,25 @@ footer {
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
 
+    #authBar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+    
+      #authControls,
+      #logoutControls {
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+    
+      #authControls input,
+      #authControls button,
+      #logoutControls button {
+        flex: 1 1 auto;
+        min-width: 100px;
+      }
+
     .page-container {
       flex-direction: column;
       padding: 15px;
