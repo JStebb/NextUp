@@ -18,7 +18,6 @@ const updateTaskButton = document.querySelector('#updateTaskButton');
 
 //Elements for searching through tasks
 const searchInput = document.querySelector('#searchInput');
-const searchButton = document.querySelector('#SearchButton');
 const mainContent = document.querySelector('.main-content');
 
 //Buttons and special div for filtering tasks

@@ -85,12 +85,14 @@ function loadTasks(uid = null) {
 }
 
 function renderTasks(tasksParsed) {
+    const sortedTasks = sortTasksByDate(tasksParsed);
+
     taskList.innerHTML = '';
     if (placeholder) {
         placeholder.style.display = tasksParsed.length === 0 ? 'block' : 'none';
     }
 
-    tasksParsed.forEach(task => {
+    sortedTasks.forEach(task => {
         const listItem = document.createElement('li');
         listItem.dataset.task = JSON.stringify(task);
 
@@ -224,11 +226,12 @@ function addTask() {
         listItemToModify.classList.remove('selected');
 
     } else {
-        if (placeholder) {
-            placeholder.style.display = 'none';
-        }
+        const existingTasks = [];
+        taskList.querySelectorAll('li').forEach(item => {
+            existingTasks.push(JSON.parse(item.dataset.task));
+        });
 
-        const task = {
+        const newTask = {
             text: taskText,
             completed: false,
             dueDate: dueDate,
@@ -236,49 +239,8 @@ function addTask() {
             category: category
         };
 
-        const listItem = document.createElement('li');
-        listItem.dataset.task = JSON.stringify(task);
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.classList.add('task-checkbox');
-
-        const taskTextSpan = document.createElement('span');
-        taskTextSpan.textContent = task.text;
-        taskTextSpan.classList.add('task-text');
-
-        const detailsDiv = document.createElement('div');
-        detailsDiv.classList.add('task-details');
-
-        if (task.dueDate) {
-            const dueDateSpan = document.createElement('span');
-            dueDateSpan.classList.add('task-due-date');
-            dueDateSpan.textContent = `Due: ${new Date(task.dueDate).toLocaleDateString()}`;
-            detailsDiv.appendChild(dueDateSpan);
-        }
-        if (task.priority) {
-            const prioritySpan = document.createElement('span');
-            prioritySpan.classList.add('task-priority');
-            prioritySpan.textContent = `Priority: ${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}`;
-            detailsDiv.appendChild(prioritySpan);
-        }
-        if (task.category) {
-            const categorySpan = document.createElement('span');
-            categorySpan.classList.add('task-category');
-            categorySpan.textContent = `Category: ${task.category}`;
-            detailsDiv.appendChild(categorySpan);
-        }
-
-        listItem.appendChild(checkbox);
-        listItem.appendChild(taskTextSpan);
-        if (detailsDiv.children.length > 0) {
-            listItem.appendChild(detailsDiv);
-        }
-        if (task.completed) {
-            listItem.classList.add('completed');
-            checkbox.checked = true;
-        }
-        taskList.appendChild(listItem);
+        existingTasks.push(newTask);
+        renderTasks(existingTasks);
     }
 
     saveTasks();
@@ -288,9 +250,9 @@ function addTask() {
 
 //Deletes the task that is currently selected
 function deleteTask() {
-    const taskToDelete = document.querySelector('#taskList .selected');
-    if (taskToDelete) {
-        taskToDelete.remove();
+    const taskToDelete = document.querySelectorAll('#taskList .selected');
+    if (taskToDelete.length > 0) {
+        taskToDelete.forEach(task => task.remove());
         saveTasks();
         filterTasks();
     } else {
@@ -300,10 +262,10 @@ function deleteTask() {
 
 //Fills the update form with selected tasks information which is then updated with the addTask() function
 function updateTask() {
-    const taskToUpdate = document.querySelector('#taskList .selected');
+    const taskToUpdate = document.querySelectorAll('#taskList .selected');
 
-    if (taskToUpdate) {
-        const task = JSON.parse(taskToUpdate.dataset.task);
+    if (taskToUpdate.length === 1) {
+        const task = JSON.parse(taskToUpdate[0].dataset.task);
 
         setFormFields(task);
 
@@ -313,6 +275,8 @@ function updateTask() {
 
         addTaskFormFields.dataset.updatingTaskId = task.text;
 
+    } else if (taskToUpdate.length > 1) {
+        alert("Please select only one task to update.")
     } else {
         alert("Please select a task to update.");
     }
@@ -455,4 +419,16 @@ function filterTasks() {
     } else if (placeholder) {
         placeholder.style.display = 'none';
     }
+}
+
+function sortTasksByDate(tasks) {
+    return tasks.sort((a,b) => {
+        //If a task has no due date it will appear at the end of the list
+        if (!a.dueDate && !b.dueDate) return 0; // both have no date so order doesnt matter
+        if (!a.dueDate) return 1;               // a has no date so b comes first
+        if (!b.dueDate) return -1;              // b has no date so a comes first
+
+        //If both tasks have a due date, compare them directly
+        return new Date(a.dueDate) - new Date(b.dueDate);
+    });
 }

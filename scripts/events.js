@@ -74,21 +74,14 @@ addTaskFormFields.addEventListener('keydown', function(event) {
 //When you click anywhere in the main content area to select/deselect tasks
 mainContent.addEventListener('click', function(event) {
     const clickedElement = event.target;
-    const currentlySelected = document.querySelector('.selected');
 
     if (clickedElement && clickedElement.tagName === 'LI' && taskList.contains(clickedElement)) {
-        if (clickedElement === currentlySelected) {
-            clickedElement.classList.remove('selected');
-        } else {
-            if (currentlySelected) {
-                currentlySelected.classList.remove('selected');
-            }
-            clickedElement.classList.add('selected');
-        }
-    } else {
-        if (currentlySelected) {
-            currentlySelected.classList.remove('selected');
-        }
+        clickedElement.classList.toggle('selected');
+    }
+
+    else if (clickedElement.classList.contains('main-content')) {
+        const allSelected = document.querySelectorAll('.selected');
+        allSelected.forEach(item => item.classList.remove('.selected'));
     }
 });
 
@@ -121,20 +114,10 @@ deleteTaskButton.addEventListener('click', deleteTask);
 if (updateTaskButton) {
     updateTaskButton.addEventListener('click', updateTask);
 }
+    
 
-//If the Search button exists on the page
-if (searchButton) {
-    searchButton.addEventListener('click', searchTasks);
-}
+searchInput.addEventListener('input', searchTasks);
 
-//If the Search Input box exists on the page and you press a key in it
-if (searchInput) {
-    searchInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            searchTasks();
-        }
-    });
-}
 
 //When the Filter By Date button is clicked
 filterByDateButton.addEventListener('click', () => {
