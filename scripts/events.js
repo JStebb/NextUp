@@ -1,3 +1,43 @@
+// === AUTH ===
+document.getElementById("loginButton").addEventListener("click", () => {
+    const email = document.getElementById("emailInput").value;
+    const password = document.getElementById("passwordInput").value;
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .catch(error => alert("Login failed: " + error.message));
+  });
+  
+  document.getElementById("signupButton").addEventListener("click", () => {
+    const email = document.getElementById("emailInput").value;
+    const password = document.getElementById("passwordInput").value;
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .catch(error => alert("Signup failed: " + error.message));
+  });
+  
+  document.getElementById("logoutButton").addEventListener("click", () => {
+    firebase.auth().signOut();
+  });
+  
+  // === AUTH STATE LISTENER ===
+  firebase.auth().onAuthStateChanged(user => {
+    const authContainer = document.getElementById("authContainer");
+    const logoutContainer = document.getElementById("logoutContainer");
+    const taskSection = document.querySelector(".page-container");
+  
+    if (user) {
+      authContainer.style.display = "none";
+      logoutContainer.style.display = "block";
+      taskSection.style.display = "block";
+      document.getElementById("userEmailDisplay").textContent = `Logged in as ${user.email}`;
+      loadTasks(user.uid); // load user's tasks from Firestore
+    } else {
+      authContainer.style.display = "block";
+      logoutContainer.style.display = "none";
+      taskSection.style.display = "block"; // optional: allow usage without login
+      loadTasks(); // load from localStorage
+    }
+  });
+  
+
 //Event Listeners
 
 //When Add Task button is clicked
@@ -177,6 +217,5 @@ filterByCategoryButton.addEventListener('click', () => {
 
 //Initial Page Load
 //These run when events.js is loaded
-loadTasks();
 resetAddForm();
 filterTasks();

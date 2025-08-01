@@ -33,38 +33,61 @@ function saveTasks() {
             }
         }
     });
-    localStorage.setItem('nextup_tasks', JSON.stringify(tasksToSave));
+
+    const user = firebase.auth().currentUser;
+    if (user) {
+        // Save to Firestore
+        firebase.firestore().collection("users").doc(user.uid).set({ tasks: tasksToSave })
+            .then(() => console.log("Tasks saved to Firestore"))
+            .catch(error => console.error("Failed to save to Firestore:", error));
+    } else {
+        // Save to localStorage (fallback for dev/testing)
+        localStorage.setItem('nextup_tasks', JSON.stringify(tasksToSave));
+    }
 }
 
+
 //Runs when the page loads. Tries to get and saved tasks from localStorage
-function loadTasks() {
-    const savedTasksRaw = localStorage.getItem('nextup_tasks');
-
-    if (!savedTasksRaw || savedTasksRaw === '[]') {
-        taskList.innerHTML = '';
-        if (placeholder) {
-            placeholder.style.display = 'block';
+function loadTasks(uid = null) {
+    if (uid) {
+        // Load from Firestore
+        firebase.firestore().collection("users").doc(uid).get()
+            .then(doc => {
+                const data = doc.data();
+                const tasksParsed = data?.tasks || [];
+                renderTasks(tasksParsed);
+            })
+            .catch(error => {
+                console.error("Error loading tasks from Firestore:", error);
+                renderTasks([]);
+            });
+    } else {
+        // Load from localStorage
+        const savedTasksRaw = localStorage.getItem('nextup_tasks');
+        if (!savedTasksRaw || savedTasksRaw === '[]') {
+            renderTasks([]);
+            return;
         }
-        return;
-    }
 
-    let tasksParsed;
-    try {
-        tasksParsed = JSON.parse(savedTasksRaw);
-    } catch (e) {
-        console.error("Error parsing saved tasks from localStorage:", e);
-        localStorage.removeItem('nextup_tasks');
-        alert("Your saved tasks might be corrupted and have been cleared.");
-        taskList.innerHTML = '';
-        if (placeholder) {
-            placeholder.style.display = 'block';
+        let tasksParsed;
+        try {
+            tasksParsed = JSON.parse(savedTasksRaw);
+        } catch (e) {
+            console.error("Error parsing saved tasks from localStorage:", e);
+            localStorage.removeItem('nextup_tasks');
+            alert("Your saved tasks might be corrupted and have been cleared.");
+            renderTasks([]);
+            return;
         }
-        return;
-    }
 
+        renderTasks(tasksParsed);
+    }
+}
+
+function renderTasks(tasksParsed) {
     taskList.innerHTML = '';
     if (placeholder) {
-        placeholder.style.display = 'none';
+        placeholder.style.display = tasksParsed.length === 0 ? 'block' : 'none';
     }
 
     tasksParsed.forEach(task => {
@@ -89,7 +112,6 @@ function loadTasks() {
             try {
                 dueDateSpan.textContent = `Due: ${new Date(task.dueDate).toLocaleDateString()}`;
             } catch (e) {
-                console.warn("Could not format date for task:", task.text, e);
                 dueDateSpan.textContent = `Due: ${task.dueDate}`;
             }
             detailsDiv.appendChild(dueDateSpan);
@@ -121,11 +143,8 @@ function loadTasks() {
 
         taskList.appendChild(listItem);
     });
-
-    if (taskList.children.length === 0 && placeholder) {
-        placeholder.style.display = 'block';
-    }
 }
+
 
 //Task Management Functions (CRUD)
 

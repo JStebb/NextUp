@@ -11,7 +11,20 @@
     <link rel="stylesheet" href="styles/filters.css">
 </head>
 <body>
-
+    <div id="authContainer">
+        <h2>Login or Create Account</h2>
+        <input type="email" id="emailInput" placeholder="Email"><br>
+        <input type="password" id="passwordInput" placeholder="Password"><br>
+        <button id="loginButton">Login</button>
+        <button id="signupButton">Sign Up</button>
+    </div>
+      
+      <!-- Optional logout button -->
+    <div id="logoutContainer" style="display: none;">
+        <p id="userEmailDisplay"></p>
+        <button id="logoutButton">Log Out</button>
+    </div>
+    
     <header>
         <h1>NextUp</h1>
     </header>
@@ -64,9 +77,36 @@
         </nav>
     </div>
 
+
+      
     <footer>
         <p>&copy; 2025 - The A-Team Coders</p>
     </footer>
+
+<!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js"></script>
+
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js"></script>
+
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js"></script>
+    
+    <script>
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyD7xOQQqz4CTUWD6Yv0nM-4f8oGFRKFW_E",
+          authDomain: "nextup-10f5d.firebaseapp.com",
+          projectId: "nextup-10f5d",
+          storageBucket: "nextup-10f5d.firebasestorage.app",
+          messagingSenderId: "384737740854",
+          appId: "1:384737740854:web:8e76cd65161faa099f7097"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+    </script>
 
     <script src="scripts/constants.js"></script> 
     <script src="scripts/functions.js"></script>
