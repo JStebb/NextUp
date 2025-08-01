@@ -40,7 +40,7 @@
 
 /* Main Page Container (Flex for sidebars and content) */
 .page-container {
-    display: flex;
+    display: flex !important;
     flex-direction: row;
     flex: 1;
     padding: 20px;
@@ -144,10 +144,10 @@ footer {
 /* Responsive Design for smaller screens */
 @media (max-width: 768px) {
 
-    body {
+    body { /*testing*/
         background-color: red !important;
-      }
-      
+      }/**/
+
     .page-container {
       flex-direction: column;
       padding: 15px;
