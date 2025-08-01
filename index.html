@@ -11,22 +11,20 @@
     <link rel="stylesheet" href="styles/filters.css">
 </head>
 <body>
-<!-- LOGIN UI -->
-<div id="authWrapper">
-    <div id="authContainer">
-      <h2>Login or Create Account</h2>
-      <input type="email" id="emailInput" placeholder="Email"><br>
-      <input type="password" id="passwordInput" placeholder="Password"><br>
-      <button id="loginButton">Login</button>
-      <button id="signupButton">Sign Up</button>
+    <div id="authBar">
+        <div id="authControls">
+          <input type="email" id="emailInput" placeholder="Email">
+          <input type="password" id="passwordInput" placeholder="Password">
+          <button id="loginButton">Login</button>
+          <button id="signupButton">Sign Up</button>
+        </div>
+      
+        <div id="logoutControls" style="display: none;">
+          <span id="userEmailDisplay"></span>
+          <button id="logoutButton">Log Out</button>
+        </div>
     </div>
-  
-    <div id="logoutContainer" style="display: none;">
-      <p id="userEmailDisplay"></p>
-      <button id="logoutButton">Log Out</button>
-    </div>
-  </div>
-  
+      
 
     <header>
         <h1>NextUp</h1>

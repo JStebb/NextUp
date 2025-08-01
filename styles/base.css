@@ -1,26 +1,3 @@
-#authWrapper {
-    padding: 20px;
-    max-width: 600px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-#authWrapper input,
-#authWrapper button {
-    display: block;
-    margin: 10px auto;
-    padding: 10px 15px;
-    font-size: 1em;
-    border-radius: 6px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(176, 224, 230, 0.4);
-    color: aliceblue;
-}
-
-#authWrapper h2 {
-    color: #e0f2f7;
-}
-
 
 /* General Body and Page Setup */
 html, body {
