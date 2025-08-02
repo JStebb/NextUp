@@ -39,7 +39,10 @@
                 <button id="addTaskButton">Add Task</button>
                 <div id="addTaskFormFields" style="display: none";>
                     <input type="text" id="taskTextBox" placeholder="Task Description...">
-                    <input type="date" id="taskDueDate" placeholder="Due Date">
+                    <div class="date-input-container">
+                        <input type="date" id="taskDueDate">
+                        <span class="date-input-icon">📅</span>
+                    </div>
                     <select id="taskPriority">
                         <option value="">Select Priority</option>
                         <option value="low">Low</option>

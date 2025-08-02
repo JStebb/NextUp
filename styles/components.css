@@ -63,3 +63,21 @@ input[type="date"] {
 input[type="date"]:valid {
     color: aliceblue;
 }
+
+.date-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#taskDueDate {
+    padding-right: 2.5rem;
+    width: 100%;
+}
+
+.date-input-icon {
+    position: absolute;
+    right: 10px;
+    font-size: 1.2rem;
+    pointer-events: none;
+}
